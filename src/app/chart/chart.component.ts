@@ -44,11 +44,12 @@ export class ChartComponent implements OnDestroy, OnInit {
     const valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
     valueAxis.tooltip.disabled = true;
     valueAxis.renderer.minWidth = 35;
+    valueAxis.calculateTotals = true;
 
     const series = chart.series.push(new am4charts.LineSeries());
     series.dataFields.dateX = 'date';
     series.dataFields.valueY = 'value';
-    series.tooltipText = '{valueY.value}';
+    series.tooltipText = 'Average : {valueY.average}, Value: {valueY.value}';
 
     chart.cursor = new am4charts.XYCursor();
 
@@ -72,6 +73,8 @@ export class ChartComponent implements OnDestroy, OnInit {
     for (let i = 0; i < volumes.length; i++) {
       data.push({ date: volumes[i].date, name: 'name' + i, value: volumes[i].volume });
     }
+
+    // give data to the graph
     this.chart.data = data;
   }
 
